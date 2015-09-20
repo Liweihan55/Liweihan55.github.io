@@ -55,7 +55,6 @@ body{background: #C8EDFF;overflow-y: scroll;}
 	box-shadow:none;
 	border-color:red;
 }
-
 #header>input{
 	display: inline-block;
 	width: 100px;
@@ -89,6 +88,8 @@ body{background: #C8EDFF;overflow-y: scroll;}
 }
 .userDt{
 	float: left;
+	text-align: center;
+	overflow: hidden;
 	width: 100px;
 	height: 100px;
 	border: 1px solid #E4E4E4;
@@ -118,5 +119,13 @@ body{background: #C8EDFF;overflow-y: scroll;}
 	word-break: break-all;
 
 }
-
+.userT{
+	margin-top: 10px;
+	font-size: 13px;
+	color: #ccc;
+}
+.remove{
+	margin-left: 10px;
+	text-decoration: none;
+}
 
