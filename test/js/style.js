@@ -12,8 +12,12 @@ window.onload = function () {
 				return;
 			}
 			// 创建留言框
+			var userDiv = document.createElement('div');
+			userDiv.className = "userDiv";
+
 			var userDl = document.createElement('dl');
 			userDl.className = "userDl";
+			userDiv.appendChild(userDl);
 			// 创建头像
 			var userDt = document.createElement('dt');
 			userDl.appendChild(userDt);
@@ -59,7 +63,11 @@ window.onload = function () {
 			remove.onclick = function () {
 				var mymessage =confirm("确定删除？");
 				if(mymessage == true){
-					context.removeChild(this.parentNode.parentNode.parentNode);
+					tweenOut(userDiv,userDiv.offsetHeight);
+					setTimeout(function(){
+						context.removeChild(userDiv);
+					}, 800);
+				
 				}
 			}
 
@@ -70,11 +78,52 @@ window.onload = function () {
 			textarea.value = "";	
 			userNameInp.value = "";
 
+
+
 			if(context.childNodes.length>0){
-				context.insertBefore(userDl,context.childNodes[0]);
+				context.insertBefore(userDiv,context.childNodes[0]);
+				
 			}else{
-				context.appendChild(userDl);
+				context.appendChild(userDiv);
 			}
+
+			var uHeight = userDiv.offsetHeight;
+			userDiv.style.height = 0 + 'px';
+
+			//添加加入效果
+			tweenIn(userDiv,uHeight);
+			
+			function tweenIn (obj,uHeight) {
+				var start = 0;
+				var change = uHeight;
+				var t = 0;
+				var endT = 60;
+				var timer = setInterval(function () {
+					t++;
+					if(t>endT){
+					   clearInterval(timer);
+					   return;
+					}
+					var n = Tween.Bounce.easeOut(t,start,change,endT);
+					obj.style.height = n + "px";
+				},15)
+			}
+			function tweenOut (obj,uHeight) {
+				var start = uHeight;
+				var change = -uHeight;
+				var t = 0;
+				var endT = 60;
+				var timer = setInterval(function () {
+					t++;
+					if(t>endT){
+					   clearInterval(timer);
+					   return;
+					}
+					var n = Tween.Bounce.easeOut(t,start,change,endT);
+					obj.style.height = n + "px";
+				},15)
+			}
+
 
 		}
 	}

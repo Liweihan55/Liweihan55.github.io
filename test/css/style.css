@@ -79,6 +79,9 @@ body{background: #C8EDFF;overflow-y: scroll;}
 	min-height:500px; 
 	/*padding:20px 0;*/
 }
+.userDiv{
+	overflow: hidden;
+}
 .userDl{
 	padding:20px;
 	padding-right: 50px;
