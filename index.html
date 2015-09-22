@@ -94,7 +94,7 @@
 	function rander (cxt) {
 		cxt.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 		var now_time = new Date();
-		var endTime = new Date("2015-9-22");
+		var endTime = new Date("2015-9-23");
 
 		var time = (endTime -now_time)/1000;
 	    var d,h,m,s;
@@ -102,7 +102,6 @@
 	    h = Math.floor((time%86400)/3600);
 	    m = Math.floor((time%3600)/60);
 	    s = Math.floor(time%60);
-
 
 		newh = h<0?0:h ;
 		newm = m<0?0:m ;
