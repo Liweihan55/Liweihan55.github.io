@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>倒计时</title>
+	<title>你猜猜猜</title>
 	<style type="text/css">
 		*{padding: 0;margin:0;}
 		html{
@@ -15,13 +15,32 @@
 		#camvas{
 			height: 100%;
 		}
+		.jump_a{
+			padding: 10px 20px 20px 20px;
+			display: inline-block;
+			background: #F42AFF;
+			border-radius: 10px;
+			color: #fff;
+			font-size: 40px;
+			text-decoration: none;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 80px;
+			height: 40px;
+			margin: auto;
+
+		}
+		
 
 	</style>
 
 	<script type="text/javascript" src="digit.js"></script>
 </head>
 <body>
-	<embed src="1.mp3" autostart="true" loop="true" width="0" height="0"></embed>
+	
 	<canvas id="canvas"></canvas>
 
 
@@ -32,7 +51,26 @@
 	//一共115个格子，格子 = 球半径+1，球半径=格子-1
 	var RADIUS = Math.floor(WINDOW_WIDTH*4/5 / 115)-1;	
 	var MARGIN_LEFT = parseInt(WINDOW_WIDTH*1/10);
-	var MARGIN_TOP = parseInt((WINDOW_HEIGHT-2*(10*RADIUS))/5);		
+	var MARGIN_TOP = parseInt((WINDOW_HEIGHT-2*(10*RADIUS))/5);	
+
+	var isEnd = false;
+
+	var canvas = document.getElementById("canvas");
+	var cantext = canvas.getContext("2d");
+	canvas.width = WINDOW_WIDTH;
+	canvas.height = WINDOW_HEIGHT;
+
+	window.onresize = function () {
+		WINDOW_WIDTH = document.body.clientWidth;
+		WINDOW_HEIGHT = document.body.clientHeight;
+		//一共115个格子，格子 = 球半径+1，球半径=格子-1
+		RADIUS = Math.floor(WINDOW_WIDTH*4/5 / 115)-1;	
+		MARGIN_LEFT = parseInt(WINDOW_WIDTH*1/10);
+		MARGIN_TOP = parseInt((WINDOW_HEIGHT-2*(10*RADIUS))/5);
+		canvas.width = WINDOW_WIDTH;
+		canvas.height = WINDOW_HEIGHT;
+	}
+	
 
 	var colors = ["#33b5e5","#0099cc","#aa66cc","#9933cc","#99cc00","669900","#ffbb33","#ff800","#ff444","#cc0000"];
 	var balls = new Array;
@@ -44,14 +82,7 @@
 	var oldm = "-1";
 	var olds = "-1";
 
-	var canvas = document.getElementById("canvas");
-	var cantext = canvas.getContext("2d");
-
-	canvas.width = WINDOW_WIDTH;
-	canvas.height = WINDOW_HEIGHT;
-
-
-	setInterval(function () {
+	var runs =  setInterval(function () {
 		rander(cantext);
 		update(cantext);
 	}, 50);
@@ -59,12 +90,31 @@
 
 	// 处理时间
 	function rander (cxt) {
-		console.log(balls.length);
 		cxt.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		var time = new Date();
-		newh = time.getHours();
-		newm = time.getMinutes();
-		news = time.getSeconds();
+		var now_time = new Date();
+		var endTime = new Date("2015-9-23");
+
+		var time = (endTime -now_time)/1000;
+	    var d,h,m,s;
+	    d = Math.floor(time/86400);
+	    h = Math.floor((time%86400)/3600);
+	    m = Math.floor((time%3600)/60);
+	    s = Math.floor(time%60);
+
+
+		newh = h<0?0:h ;
+		newm = m<0?0:m ;
+		news = s<0?0:s ;
+
+		if(newh==0&&newm==0&&news==0){
+			if(balls.length == 0 && isEnd == true){
+				clearInterval(runs);
+			}
+			if (isEnd == false) {
+				addButton();
+				isEnd = true;
+			}
+		}
 
 		renderDigit( MARGIN_LEFT+0 , MARGIN_TOP+0 , parseInt(newh/10) , cxt );
 		renderDigit( MARGIN_LEFT+8*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(newh%10) , cxt );
@@ -169,6 +219,17 @@
 
 		}
 		
+	}
+
+	function addButton () {
+		var a = document.createElement('a');
+		a.href = "###";
+		a.className = "jump_a";
+		a.innerHTML = "进入";
+		document.body.appendChild(a);
+		a.onclick = function () {
+			alert("出错：程序猿没来得及把任务准时完成，正在挑灯奋战，请明天再试！~~~~(>_<)~~~~");
+		}
 	}
 
 
