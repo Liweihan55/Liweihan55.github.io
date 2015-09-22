@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>倒计时</title>
+	<title>萌萌哒</title>
 	<style type="text/css">
 		*{padding: 0;margin:0;}
 		html{
@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="digit.js"></script>
 </head>
 <body>
-	<embed src="1.mp3" autostart="true" loop="true" width="0" height="0"></embed>
+	<!--<embed src="1.mp3" autostart="true" loop="true" width="0" height="0"></embed>-->
 	<canvas id="canvas"></canvas>
 
 
@@ -59,12 +59,21 @@
 
 	// 处理时间
 	function rander (cxt) {
-		console.log(balls.length);
 		cxt.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		var time = new Date();
-		newh = time.getHours();
-		newm = time.getMinutes();
-		news = time.getSeconds();
+		var now_time = new Date();
+		var endTime = new Date("2015-9-23");
+
+		var time = (endTime -now_time)/1000;
+	    	var d,h,m,s;
+		 d = Math.floor(time/86400);
+	    	h = Math.floor((time%86400)/3600);
+	    	m = Math.floor((time%3600)/60);
+	    	s = Math.floor(time%60);
+
+
+		newh = h<0?0:h ;
+		newm = m<0?0:m ;
+		news = s<0?0:s ;
 
 		renderDigit( MARGIN_LEFT+0 , MARGIN_TOP+0 , parseInt(newh/10) , cxt );
 		renderDigit( MARGIN_LEFT+8*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(newh%10) , cxt );
