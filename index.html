@@ -13,7 +13,6 @@
 			overflow: hidden;
 		}
 		#camvas{
-			/*margin-top: 100px;*/
 			height: 100%;
 		}
 
@@ -28,10 +27,13 @@
 
 <script type="text/javascript">
 	
-	var WINDOW_WIDTH = 1024;
-	var WINDOW_HEIGHT = 768;
+	var WINDOW_WIDTH = document.body.clientWidth;
+	var WINDOW_HEIGHT = document.body.clientHeight;
+	//一共115个格子，格子 = 球半径+1，球半径=格子-1
+	var RADIUS = Math.floor(WINDOW_WIDTH*4/5 / 115)-1;	
+	var MARGIN_LEFT = parseInt(WINDOW_WIDTH*1/10);
+	var MARGIN_TOP = parseInt((WINDOW_HEIGHT-2*(10*RADIUS))/5);		
 
-	var RADIUS = 7.5 ;
 	var colors = ["#33b5e5","#0099cc","#aa66cc","#9933cc","#99cc00","669900","#ffbb33","#ff800","#ff444","#cc0000"];
 	var balls = new Array;
 
@@ -41,9 +43,6 @@
 	var oldh = "-1";
 	var oldm = "-1";
 	var olds = "-1";
-
-	WINDOW_WIDTH = document.body.clientWidth;
-	WINDOW_HEIGHT = document.body.clientHeight;
 
 	var canvas = document.getElementById("canvas");
 	var cantext = canvas.getContext("2d");
@@ -67,14 +66,14 @@
 		newm = time.getMinutes();
 		news = time.getSeconds();
 
-		renderDigit( 0 , 0 , parseInt(newh/10) , cxt );
-		renderDigit( 8*(RADIUS+1)*2 , 0 , parseInt(newh%10) , cxt );
-		renderDigit( 17*(RADIUS+1)*2 , 0 , parseInt(10) , cxt );
-		renderDigit( 22*(RADIUS+1)*2 , 0 , parseInt(newm/10) , cxt );
-		renderDigit( 30*(RADIUS+1)*2 , 0 , parseInt(newm%10) , cxt );
-		renderDigit( 38*(RADIUS+1)*2 , 0 , parseInt(10) , cxt );
-		renderDigit( 43*(RADIUS+1)*2 , 0 , parseInt(news/10) , cxt);
-		renderDigit( 51*(RADIUS+1)*2 , 0 , parseInt(news%10) , cxt);
+		renderDigit( MARGIN_LEFT+0 , MARGIN_TOP+0 , parseInt(newh/10) , cxt );
+		renderDigit( MARGIN_LEFT+8*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(newh%10) , cxt );
+		renderDigit( MARGIN_LEFT+17*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(10) , cxt );
+		renderDigit( MARGIN_LEFT+22*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(newm/10) , cxt );
+		renderDigit( MARGIN_LEFT+30*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(newm%10) , cxt );
+		renderDigit( MARGIN_LEFT+38*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(10) , cxt );
+		renderDigit( MARGIN_LEFT+43*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(news/10) , cxt);
+		renderDigit( MARGIN_LEFT+51*(RADIUS+1)*2 , MARGIN_TOP+0 , parseInt(news%10) , cxt);
 
 	}
 
@@ -131,8 +130,8 @@
 			for(var j = 0 ; j < digit[num][i].length ; j ++)
 				if(digit[num][i][j] == 1){
 					var aBall = {
-						x:x+j*2*(RADIUS+1)+(RADIUS+1),
-						y:y+i*2*(RADIUS+1)+(RADIUS+1),
+						x:MARGIN_LEFT+x+j*2*(RADIUS+1)+(RADIUS+1),
+						y:MARGIN_TOP+y+i*2*(RADIUS+1)+(RADIUS+1),
 						color:colors[parseInt(Math.random()*colors.length)] ,
 						g:1.5+Math.random(),
 	                    vx:Math.pow( -1 , Math.ceil( Math.random()*1000 ) ) * 4,
@@ -156,13 +155,14 @@
 				balls[i].vy = -balls[i].vy*0.7;
 			}
 
-			//绘制
+			//绘制球
 			cxt.beginPath();
 			cxt.fillStyle = balls[i].color;
 			cxt.arc(balls[i].x,balls[i].y,RADIUS,0,2*Math.PI);
 			cxt.closePath();
 			cxt.fill();
-		
+			
+			//超出部分remove
 			if(balls[i].x > WINDOW_WIDTH || balls[i].x < 0){
 				balls.splice(i,1);
 			}
