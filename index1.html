@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>啦啦啦</title>
+	<script type="text/javascript" src="js/tween.js"></script>
+
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	html,body{height: 100%;}
+	body{
+		background: #EDEDED;
+	}
+	#wrap{
+		width: 80%;
+		height: 100%;
+		margin: 0 auto;	
+		overflow: hidden;
+	}
+	.imgs{
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	.con{
+		cursor:pointer;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+	}
+	.imga{
+		/*z-index: 1;*/
+	}
+	.pDiv{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.p1,.p2,.p3,.p4{
+		float: left;
+		margin: 20px 0 0 80px;
+		font-size: 25px;
+		padding: 20px;
+		color: #FFFFFF;
+		font-weight: bolder;
+		border-radius: 10px;
+	}
+	.p1{
+		background: rgba(249, 98, 122,0.8);
+	}
+	.p2{
+		background: rgba(255,133,14,0.8);
+	}
+	.p3{
+		background: rgba(226, 130, 246,0.8);
+	}
+	.p4{
+		background: rgba(83, 234, 211,0.8);
+	}
+
+@media screen and (max-width: 960px){
+	.p1,.p2,.p3,.p4{
+		margin: 10px 0 0 40px;
+		font-size: 20px;
+		padding: 15px;
+		color: #FFFFFF;
+		font-weight: bolder;
+		border-radius: 10px;
+	}
+}	
+@media screen and (max-width: 780px){
+	.p1,.p2,.p3,.p4{
+		margin: 10px 0 0 40px;
+		font-size: 18px;
+		padding: 10px;
+		color: #FFFFFF;
+		font-weight: bolder;
+		border-radius: 10px;
+	}
+}
+@media screen and (max-width: 550px){
+	.p1,.p2,.p3,.p4{
+		margin: 10px 0 0 40px;
+		font-size: 15px;
+		padding: 8px;
+		color: #FFFFFF;
+		font-weight: bolder;
+		border-radius: 10px;
+	}
+}
+
+</style>
+
+</head>
+<body>
+	<div id="wrap">
+
+	</div>
+
+<script type="text/javascript">
+
+//数组的删除
+//点击事件
+	var wrap = document.getElementById('wrap');
+
+	var NUM = 10;
+	var imgBili = new Array();
+	var isMove = false;
+	var index = 0;
+	var pClass = 4;
+ 	var isPush = false;
+	var arrays = [
+		["0123123？","444","的撒的","那发3规范的撒"],
+		["123123？","444","的撒的","那发3规范的撒"],
+		["223123？","444","的撒的","那发3规范的撒"],
+		["323123？","444","的撒的","那发3规范的撒"],
+		["423123？","444","的撒的","那发3规范的撒"],
+		["523123？","444","的撒的","那发3规范的撒"],
+		["623123？","444","的撒的","那发3规范的撒"],
+		["723123？","444","的撒的","那发3规范的撒"],
+		["823123？","444","的撒的","那发3规范的撒"],
+		["923123？","444","的撒的","那发3规范的撒"],
+		["1023123？","444","的撒的","那发3规范的撒"]
+	]
+
+	//添加模板
+	for(var i = 0 ; i < NUM ; i++){
+		var imgs = document.createElement('div');
+		imgs.className = 'imgs';
+		wrap.appendChild(imgs);
+		var con = document.createElement('div');
+		con.className = 'con';
+		imgs.appendChild(con);
+		var img = document.createElement('img');
+		img.src = 'img/'+(i%2==0?1:2)+'.jpg'
+		img.className = 'imga';
+		con.appendChild(img);
+	}
+	var imgs = document.getElementsByClassName('imgs');
+	var con = document.getElementsByClassName('con');
+	var imga = document.getElementsByClassName('imga');
+
+	//添加文本
+	for(var i = 0 ; i < arrays.length && i <imgs.length; i ++){
+		var div  = document.createElement('div');
+		div.className = 'pDiv';
+		con[i].appendChild(div);
+		for(var j = 0 ; j < arrays[i].length ; j ++ ){
+			var text = document.createTextNode(arrays[i][j]);
+			var p  = document.createElement('p');
+			p.appendChild(text);
+			p.className = "p" + parseInt(Math.random()*pClass + 1);
+			div.appendChild(p);
+		}
+	}
+
+	var pDiv = document.getElementsByClassName('pDiv');
+	var allP = new Array();
+	for(var i = 0 ; i < pDiv.length ; i++){
+		allP[i] = new Array();
+		for(var j = 0 ; j < pDiv[i].children.length ; j++){
+			allP[i][j] = pDiv[i].children[j];
+		}
+	}
+
+	//显示字体
+	var showsetA = new Array();
+
+	function testShow (k) {
+		var s = 0;
+		for(var i = 0 ; i < showsetA.length ; i++){
+			clearInterval(showsetA[i]);
+			showsetA.splice(i,1);
+		}
+		if(k<allP.length)
+		for(var i = 0 ; i < allP[k].length ; i++){
+			var showset = setTimeout(function(){
+				var start = 0;
+				var change = 100;
+				var t = 0;
+				var endT = 60;
+				var timer = setInterval(function () {
+					t++;
+					if(t>endT){
+						s++;
+						clearInterval(timer);
+						return;
+					}
+					var n =  Tween.Quad.easeOut(t,start,change,endT);
+					allP[k][s].style.opacity = n/100;	
+				},30);
+				showsetA.push(timer);
+			},3000*i);
+			showsetA.push(showset);
+		}
+		
+	}
+
+	//隐藏字体
+	function testHide () {
+		for(var i = 0 ; i < showsetA.length ; i++){
+			clearInterval(showsetA[i]);
+			showsetA.splice(i,1);
+		}
+
+		for(var i = 0 ; i < pDiv.length ; i++){
+			for(var j = 0 ; j < pDiv[i].children.length ; j++){
+				allP[i][j].style.opacity = "0";
+				
+			}
+		}
+	}
+
+
+
+	window.onload = function () {
+		for(var i =0 ; i<imga.length;i++){
+			imgBili[i] = imga[i].offsetWidth/imga[i].offsetHeight;
+		}
+		paiban();
+		testHide();
+		testShow(index);
+	}
+
+	window.onresize = function () {
+		paiban();
+		wrap.scrollTop = imgs[0].offsetHeight*index;
+	}
+
+	//排版
+	function paiban ( number , small , size) {
+		var W_H = imgs[0].offsetWidth/imgs[0].offsetHeight;
+
+
+		for(var i = 0 ; i < imgs.length ; i++){
+			
+		}
+		if (number != null) {
+			if (small != null) {
+				for(var i = number ; i < number+small ; i++){
+					paibana (i, size);
+				}
+			}else{
+				for(var i = 0 ; i < imgs.length ; i++){
+					paibana (i, size);
+				}
+			}
+		}else{
+			for(var i = 0 ; i < imgs.length ; i++){
+				paibana (i, size);
+			}
+		}
+
+		function paibana (i , size) {
+			var w_h = imgBili[i];
+			
+			//如果外框的宽比大，择优先填满高度，空宽度
+			if(W_H>w_h){
+				imga[i].style.height = "100" + "%";
+				if(size!=null){
+					if (size<30) {
+						con[i].style.height = 30 + '%';
+					}else{
+						con[i].style.height = size + '%';
+					}	
+				}else{
+					con[i].style.height = "100" + "%";
+				}
+				
+				imga[i].style.width = imga[i].offsetHeight*imgBili[i] + "px";
+				con[i].style.width = imga[i].offsetWidth + "px";
+				con[i].style.marginTop = parseInt((imgs[i].offsetHeight-con[i].offsetHeight)/2) + "px";
+				con[i].style.marginLeft = parseInt((imgs[i].offsetWidth-con[i].offsetWidth)/2) + "px";
+
+			}else{
+				imga[i].style.width = "100" + "%";
+				
+				if(size != null){
+					if(size<30){
+						con[i].style.width = 30 + '%';
+					}else{
+						con[i].style.width = size + '%';
+					}
+				}else{
+					con[i].style.width = "100" + "%";
+					
+				}
+				imga[i].style.height = imga[i].offsetWidth/imgBili[i] + "px";
+				con[i].style.height = imga[i].offsetHeight + "px";
+				con[i].style.marginTop = parseInt((imgs[i].offsetHeight-con[i].offsetHeight)/2) + "px";
+				con[i].style.marginLeft = parseInt((imgs[i].offsetWidth-con[i].offsetWidth)/2) + "px";
+			}
+		}
+		
+		
+	}
+
+	//拖动切换效果
+	document.onmousedown = function (event) {
+		event.preventDefault();	
+	}
+	wrap.onmousedown = function (event) {
+		
+		if( isMove == true ){
+			return;
+		}
+
+		isPush = true;
+
+        var event = event || window.event;
+
+        var tmpY = event.clientY;
+        var tpmS =  wrap.scrollTop;
+        var endY = event.clientY;
+        document.onmousemove = function (event) {
+        	testHide();
+        	if( isMove == true ){
+				return;
+			}
+			var event = event || window.event;
+			
+			//终点位置   
+			endY= event.clientY;
+			//边界位置
+			var mouseY = imgs[0].offsetHeight*(imgs.length-1);
+
+			if(endY <= 0)
+			     endY = 0;
+			if(endY >= mouseY)
+			     endY = mouseY
+
+			wrap.scrollTop = tpmS-(endY-tmpY) ;
+			lashen();
+
+        }
+
+        document.onmouseup = function () {
+
+			document.onmousemove = null;
+
+			if (isPush == false) {return;}
+
+			if( isMove == true ){
+				return;
+			}
+
+			if((endY-tmpY)<-imgs[0].offsetHeight/10 && index+1<imgs.length){
+				index = index+1;
+			}
+			if ((endY-tmpY)>imgs[0].offsetHeight/10 && index-1>=0) {
+				index = index-1;
+			}
+
+			if((endY-tmpY)!=0){
+				tweenFn();
+			}
+
+			isPush = false;
+        }
+		
+    }
+
+    var timer;
+	function tweenFn () {
+		isMove = true;
+		var start = wrap.scrollTop;
+		var change = imgs[0].offsetHeight*index-start;
+
+		var t = 0;
+		var endT = 120;
+		clearInterval(timer);
+		timer = setInterval(function () {
+			t++;
+			lashen();
+			if(t>endT){
+			    clearInterval(timer);
+			    isMove = false;
+			    testShow(index);
+			    return;
+			}
+			var n = Tween.Quad.easeOut(t,start,change,endT);
+			wrap.scrollTop = n;
+		},10);
+	}
+
+	function lashen () {
+		var k =	(wrap.scrollTop-imgs[index].offsetHeight*index)/imgs[index].offsetHeight;
+		if(k<0)
+			k*=(-1);
+		k = 1-k;
+
+		paiban(index,1,parseInt(k*100));
+
+		if(index-1>=0){
+			paiban(index-1,1,100-parseInt(k*100));
+		}
+		if(index+1<imgs.length){
+			paiban(index+1,1,100-parseInt(k*100));
+		}
+	}
+
+
+</script>	
+</body>
+</html>
