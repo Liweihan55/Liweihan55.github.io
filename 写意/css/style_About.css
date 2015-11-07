@@ -1,0 +1,44 @@
+
+
+#title{
+	padding-top: 70px;
+}
+#title img{
+	width: 600px;
+	display: block;
+	margin: auto;
+}
+
+
+#mainbody{
+	background: #F5F5F5;
+	padding-bottom: 120px;
+	padding-left:15%;
+	padding-right:15%;
+}
+
+#mainbody p{
+	font-size: 20px;
+	line-height: 40px;
+	margin-bottom: 50px;
+}
+
+
+@media screen and (max-width: 640px){
+
+#title img{
+	width: 100%;
+}
+#mainbody{
+	padding-bottom: 80px;
+}
+#mainbody p{
+	font-size: 17px;
+	line-height: 30px;
+	margin-bottom: 30px;
+	padding-left:5%;
+	padding-right:5%;
+
+}
+
+}

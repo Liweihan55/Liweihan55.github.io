@@ -1,0 +1,87 @@
+body{
+	
+}
+#bigImg{
+	width: 100%;
+	height: 100px;
+	background: red;
+}
+
+#mainbody{
+	position: relative;
+	width: 100%;
+	margin-top: 35px;
+	background: #F6F4CC;
+	text-align: center;
+	overflow: hidden;
+}
+#mainbody .con{
+	position: relative;
+	overflow: hidden;
+}
+.pin{
+	position: absolute;
+	display: inline-block;
+	padding: 10px;
+	opacity:0;
+	transition:opacity 3s;
+}
+.box{
+	width: 100%;
+}
+.pin .box img{
+	display: block;
+	width: 100%;
+}
+#mainbody .bottom{
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	margin-top: 50px;
+	text-align: center;
+
+	outline:0;
+}
+#mainbody .bottom a img{
+	border: 0;
+}
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 640px){
+
+#mainbody .bottom a img{
+	width: 50px;
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 320px){
+
+#mainbody .bottom a img{
+	width: 30px;
+}
+
+
+
+}

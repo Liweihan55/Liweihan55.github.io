@@ -1,0 +1,93 @@
+
+#mainbody{
+	width: 1025px;
+	height: auto;
+	margin: 0 auto;
+	background: #C9D500;
+}
+
+#mainbody .con{
+	width: 100%;
+	height: 241px;
+	border-top: 1px solid #BFBFBF;
+	-webkit-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: gray;
+	color: #B6B6B6;
+}
+#mainbody .con:hover{
+	-webkit-filter: grayscale(0);
+	-o-filter: grayscale(0);
+	filter: grayscale(0);
+	color: #000000;
+}
+
+#mainbody .con img{
+	display: block;
+	width: 675px;
+}
+#mainbody .con div{
+	width: 300px;
+	height: 201px;
+	padding: 20px;
+	background: #fff;
+}
+#mainbody .con div h2{
+	margin-bottom: 20px;
+}
+
+#mainbody .con1 .text{
+	float: right;
+}
+#mainbody .con1 img{
+	float: left;
+}
+
+#mainbody .con2 .text{
+	float: left;
+}
+#mainbody .con2 img{
+	float: right;
+}
+
+
+#mainbody .con3 .text{
+	float: right;
+}
+#mainbody .con3 img{
+	float: left;
+}
+
+@media screen and (max-width: 1025px){
+
+#mainbody{
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+}
+#mainbody .con{
+	height: auto;
+	overflow: hidden;
+}
+#mainbody .con div{
+	width: auto;
+	height: auto;
+}
+#mainbody .con img{
+	width: 100%;
+}
+
+
+}
+
+@media screen and (max-width: 640px){
+
+#mainbody h2{
+	font-size: 15px;
+}
+#mainbody p{
+	font-size: 12px;
+}
+
+}
